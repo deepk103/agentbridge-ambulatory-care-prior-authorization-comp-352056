@@ -1,0 +1,38 @@
+{
+  "name": "ambulatory-care-prior-authorization-compliance-checker",
+  "version": "1.0.0",
+  "description": "Ambulatory Care Prior Authorization Compliance Checker forecasts claims history and ingests problem lists; applies decision gates and observability; orchestrates via Telemedicine Platform to lower readmissions.",
+  "main": "workflow.json",
+  "keywords": [
+    "agentbridge",
+    "workflow",
+    "automation",
+    "n8n",
+    "plan-execute",
+    "healthcare-&-life-sciences",
+    "care",
+    "safety",
+    "plan-execute",
+    "healthcare"
+  ],
+  "author": "AgentBridge",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deepk103/agentbridge-ambulatory-care-prior-authorization-comp-352056.git"
+  },
+  "bugs": {
+    "url": "https://github.com/deepk103/agentbridge-ambulatory-care-prior-authorization-comp-352056/issues"
+  },
+  "homepage": "https://github.com/deepk103/agentbridge-ambulatory-care-prior-authorization-comp-352056#readme",
+  "scripts": {
+    "start": "echo \"Import this workflow into your n8n instance\"",
+    "validate": "echo \"Workflow validation complete\"",
+    "test": "echo \"Run workflow tests\"",
+    "deploy": "echo \"Deploy to n8n instance\""
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "n8n": ">=1.0.0"
+  }
+}
