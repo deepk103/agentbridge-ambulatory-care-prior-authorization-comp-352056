@@ -1,0 +1,321 @@
+{
+  "id": "tpl-933115031",
+  "name": "Ambulatory Care Prior Authorization Compliance Checker",
+  "description": "Ambulatory Care Prior Authorization Compliance Checker forecasts claims history and ingests problem lists; applies decision gates and observability; orchestrates via Telemedicine Platform to lower readmissions.",
+  "industry": "Healthcare & Life Sciences",
+  "pattern": "Plan-Execute",
+  "complexity": "Expert",
+  "rating": 4.4,
+  "downloads": 24935,
+  "favorites": 4955,
+  "executionTime": "6 min",
+  "tags": [
+    "care",
+    "safety",
+    "plan-execute",
+    "healthcare"
+  ],
+  "steps": [
+    {
+      "id": "intake",
+      "name": "Signal Intake",
+      "description": "Collect, validate and normalize admission notes from LIS; attach a runId and timestamp for traceability."
+    },
+    {
+      "id": "plan-0",
+      "name": "Plan",
+      "description": "Execute plan phase for the Plan-Execute pattern: persist interim state, enforce guardrails, and emit structured JSON results."
+    },
+    {
+      "id": "execute-1",
+      "name": "Execute",
+      "description": "Execute execute phase for the Plan-Execute pattern: persist interim state, enforce guardrails, and emit structured JSON results."
+    },
+    {
+      "id": "plan-drafting-0",
+      "name": "Plan Drafting",
+      "description": "Plan Drafting across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "risk-scoring-1",
+      "name": "Risk Scoring",
+      "description": "Risk Scoring across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "triage-2",
+      "name": "Triage",
+      "description": "Triage across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability."
+    },
+    {
+      "id": "finalize",
+      "name": "Outcome Measurement",
+      "description": "Assemble final payload with status, artifacts, KPIs and audit trail; store to HIE; return response JSON for the client."
+    }
+  ],
+  "nodes": [
+    {
+      "id": "intake",
+      "type": "agentbridge",
+      "data": {
+        "label": "Signal Intake",
+        "description": "Collect, validate and normalize admission notes from LIS; attach a runId and timestamp for traceability.",
+        "nodeType": "input",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 60,
+        "y": 120
+      }
+    },
+    {
+      "id": "plan-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "Plan",
+        "description": "Execute plan phase for the Plan-Execute pattern: persist interim state, enforce guardrails, and emit structured JSON results.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 310,
+        "y": 120
+      }
+    },
+    {
+      "id": "execute-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "Execute",
+        "description": "Execute execute phase for the Plan-Execute pattern: persist interim state, enforce guardrails, and emit structured JSON results.",
+        "nodeType": "mcp",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 560,
+        "y": 120
+      }
+    },
+    {
+      "id": "plan-drafting-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "Plan Drafting",
+        "description": "Plan Drafting across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 810,
+        "y": 120
+      }
+    },
+    {
+      "id": "risk-scoring-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "Risk Scoring",
+        "description": "Risk Scoring across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1060,
+        "y": 120
+      }
+    },
+    {
+      "id": "triage-2",
+      "type": "agentbridge",
+      "data": {
+        "label": "Triage",
+        "description": "Triage across joined datasets; branch on thresholds using decision gates; write metrics (success/error counts) for observability.",
+        "nodeType": "llm",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1310,
+        "y": 120
+      }
+    },
+    {
+      "id": "finalize",
+      "type": "agentbridge",
+      "data": {
+        "label": "Outcome Measurement",
+        "description": "Assemble final payload with status, artifacts, KPIs and audit trail; store to HIE; return response JSON for the client.",
+        "nodeType": "output",
+        "category": "ai-models",
+        "executionMode": "autonomous"
+      },
+      "position": {
+        "x": 1560,
+        "y": 120
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-0",
+      "source": "intake",
+      "target": "plan-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-1",
+      "source": "plan-0",
+      "target": "execute-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-2",
+      "source": "execute-1",
+      "target": "plan-drafting-0",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-3",
+      "source": "plan-drafting-0",
+      "target": "risk-scoring-1",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-4",
+      "source": "risk-scoring-1",
+      "target": "triage-2",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    },
+    {
+      "id": "edge-5",
+      "source": "triage-2",
+      "target": "finalize",
+      "type": "agentbridge",
+      "data": {
+        "label": "flow"
+      }
+    }
+  ],
+  "preview": "Signal Intake → Plan → Execute → Plan Drafting → Risk Scoring → Triage → Outcome Measurement",
+  "featured": true,
+  "createdAt": "2026-01-09T18:18:27.462Z",
+  "author": "AgentBridge Team",
+  "deployments": 2505,
+  "lastDeployed": "2026-03-25T09:15:36.599Z",
+  "configuration": {
+    "provider": "nvidia",
+    "region": "us-west-2",
+    "compute": "gpu-single"
+  },
+  "healthStatus": "healthy",
+  "deploymentCount": 1247,
+  "githubRepo": "https://github.com/agentbridge/ambulatory-care-prior-authorization-compliance-checker",
+  "maintainer": "AgentBridge Team",
+  "agenticLayers": {
+    "reasoning": {
+      "modelType": "gpt-4o",
+      "reasoningPattern": "ReAct",
+      "contextWindow": 128000,
+      "memorySystem": "hybrid",
+      "decisionFramework": "Multi-Criteria Decision Analysis"
+    },
+    "orchestration": {
+      "workflowEngine": "n8n",
+      "coordinationPattern": "centralized",
+      "failoverStrategy": "retry",
+      "loadBalancing": "intelligent"
+    },
+    "protocol": {
+      "communicationProtocol": "MCP",
+      "messageFormat": "JSON",
+      "authenticationMethod": "OAuth2",
+      "encryptionStandard": "AES-256"
+    },
+    "governance": {
+      "policyEngine": "OPA",
+      "complianceStandards": [
+        "SOC2",
+        "GDPR"
+      ],
+      "auditTrail": true,
+      "riskAssessment": "medium",
+      "dataClassification": "internal"
+    },
+    "observability": {
+      "metricsCollection": "Prometheus",
+      "loggingFramework": "ELK",
+      "tracingSystem": "Jaeger",
+      "alertingRules": [],
+      "dashboardConfig": {
+        "layout": "grid",
+        "widgets": [
+          "metrics",
+          "logs",
+          "traces"
+        ],
+        "refreshInterval": 30
+      }
+    },
+    "intelligence": {
+      "learningCapability": "online",
+      "knowledgeBase": "vector-db",
+      "adaptationMechanism": "ml-based",
+      "performanceOptimization": "ai-driven"
+    }
+  },
+  "businessFunction": "data-preparation-node",
+  "autonomyLevel": "semi-autonomous",
+  "cognitiveCapabilities": [
+    {
+      "name": "Pattern Recognition",
+      "description": "Identifies patterns in business processes",
+      "confidenceLevel": 0.85,
+      "lastUpdated": "2026-04-13T18:18:27.502Z"
+    }
+  ],
+  "roiMetrics": {
+    "costSavings": 63478,
+    "timeReduction": 52,
+    "accuracyImprovement": 37,
+    "throughputIncrease": 72,
+    "errorReduction": 37
+  },
+  "complianceFramework": {
+    "standards": [
+      "SOC2",
+      "GDPR",
+      "ISO27001"
+    ],
+    "certifications": [
+      "SOC2 Type II"
+    ],
+    "auditFrequency": "monthly",
+    "lastAudit": "2026-02-09T07:24:39.574Z"
+  },
+  "scalingPolicy": {
+    "minInstances": 1,
+    "maxInstances": 10,
+    "scaleUpThreshold": 80,
+    "scaleDownThreshold": 20,
+    "cooldownPeriod": 300
+  }
+}
